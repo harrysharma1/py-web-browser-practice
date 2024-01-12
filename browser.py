@@ -8,6 +8,10 @@ class URL:
     
         self.scheme, url=url.split("://", 1)
         assert self.scheme in ["http","https"]
+        if "/" not in url:
+            url = url+"/"
+        self.host, url = url.split("/", 1)
+        self.path = "/"+ url
         
         if self.scheme == "http":
             self.port = 80
@@ -18,11 +22,7 @@ class URL:
             self.host, port = self.host.split(":",1)
             self.port = int(port)
 
-        if "/" not in url:
-            url = url+"/"
-            
-        self.host, url = url.split("/", 1)
-        self.path = "/"+ url
+
     
     """
     Sends http request for resource to server and displays body

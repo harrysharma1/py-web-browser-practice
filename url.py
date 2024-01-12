@@ -14,8 +14,10 @@ class URL:
         self.host, url = url.split("/", 1)
         self.path = "/"+ url
     
+    """
+    Sends http request for resource to server and displays body
+    """
     def request(self):
-        # 
         s = socket.socket(
             family=socket.AF_INET,
             type=socket.SOCK_STREAM,
@@ -41,6 +43,32 @@ class URL:
             if line == "\r\n":break
             header, value = line.split(":", 1)
             response_headers[header.casefold()] = value.strip()
+        assert "transfer-encoding" not in response_headers
+        assert "content-encoding" not in response_headers
+        
+        body = response.read()
+        s.close()
+        
+        return body
+    
+    def show(body):
+        in_tag = False 
+        for c in body:
+            if c == "<":
+                in_tag = True
+            elif c == ">":
+                in_tag = False
+            elif not in_tag:
+                print(c,end="")
+    
+    def load(url):
+        body = url.request()
+        show(body)
+
+if __name__ == "__main__":
+    import sys
+    load(URL(sys.argv[1]))
+
             
             
         

@@ -21,5 +21,26 @@ class URL:
             type=socket.SOCK_STREAM,
             proto=socket.IPPROTO_TCP,
         )
+        # Connect to host through port 80
         s.connect((self.host,80))
+        
+        # Make request to url
+        s.send(("GET {} HTTP/1.0\r\n".format(self.path) + \
+                "Host: {}\r\n\r\n".format(self.host)) \
+               .encode("utf8"))
+
+        # Get server response to request
+        response = s.makefile("r", encoding="utf-8", newline="\r\n")
+        
+        statusline = response.readline()
+        version, status, explaination = statusline.split(" ", 2)
+        
+        response_headers = {}
+        while True:
+            line = response.readline()
+            if line == "\r\n":break
+            header, value = line.split(":", 1)
+            response_headers[header.casefold()] = value.strip()
+            
+            
         

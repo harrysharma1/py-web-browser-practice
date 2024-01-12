@@ -1,5 +1,6 @@
 import socket
 import ssl
+import test
 
 class URL:
     def __init__(self,url):
@@ -79,6 +80,49 @@ def show(body):
 def load(url):
         body = url.request()
         show(body)
+
+"""
+Local testing for show function using AREPL
+"""
+# show("he<body>llo</body>")
+# show('he<body>llo</body>')
+# show('he<body>l</body>lo')
+# show('he<body>l<div>l</div>o</body>')
+# show('he<body>l</div>lo')
+# show('he<body>l<div>l</body>o</div>')
+
+"""
+Testing to see if the URL class's member variables show the correct thing
+"""
+# url_a = "http://test.test:90"
+# a = URL(url_a)
+# print(f"url: {url_a}")
+# print(f"URL(scheme={a.scheme}, host={a.scheme}, port={a.port}, path='{a.path}')")
+
+# print("\n")
+
+# url_b = "http://test.test"
+# b = URL(url_b)
+# print(f"url: {url_b}")
+# print(f"URL(scheme={b.scheme}, host={b.scheme}, port={b.port}, path='{b.path}')")
+
+# print("\n")
+
+# url_c = "http://test.test/example1"
+# c = URL(url_c)
+# print(f"url: {url_c}")
+# print(f"URL(scheme={c.scheme}, host={c.scheme}, port={c.port}, path='{c.path}')")
+
+
+
+"""
+Testing to see if requests work as expected
+"""
+
+# url = "http://test.test/example1"
+# a = URL(url)
+# print(a.request())
+
 
 if __name__ == "__main__":
     import sys

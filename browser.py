@@ -3,6 +3,18 @@ from url_request import URL
 
 WIDTH, HEIGHT = 800, 600
 
+def lex(body):
+    text = ""
+    in_tag = False
+    for c in body:
+        if c == "<":
+            in_tag = True
+        elif c == ">":
+            in_tag = False
+        elif not in_tag:
+            text+=c
+    return text
+    
 class BrowserViewer():
     def __init__(self):
         self.window = tkinter.Tk()
@@ -17,6 +29,7 @@ class BrowserViewer():
         self.canvas.create_rectangle(10,20,400,300)
         self.canvas.create_oval(100,100,150,150)
         self.canvas.create_text(200,150, text="Hola")
+        
 
 if __name__=="__main__":
     import sys

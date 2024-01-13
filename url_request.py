@@ -84,6 +84,7 @@ class URL:
             response_headers["user-agent"] = "harry's browser"
             response_headers["status"] = status
             response_headers["explaination"] = explaination.replace("\r\n","")
+
         
         assert "transfer-encoding" not in response_headers
         assert "content-encoding" not in response_headers
@@ -96,13 +97,18 @@ class URL:
     
 def show(body):
         in_tag = False 
+        text  = ""
         for c in body:
             if c == "<":
                 in_tag = True
             elif c == ">":
                 in_tag = False
             elif not in_tag:
-                print(c,end="")
+                text += f'{c}'
+                text = text.replace('&lt;','<')
+                text = text.replace('&gt;','>')
+        print(text, end="")
+                
     
 def load(url):
         body = url.request()

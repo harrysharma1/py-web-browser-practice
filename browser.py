@@ -18,6 +18,7 @@ def lex(body):
 
 def layout(text):
     cursor_x,cursor_y = HSTEP,VSTEP
+
     
 class BrowserViewer():
     def __init__(self):

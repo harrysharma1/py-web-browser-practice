@@ -1,6 +1,6 @@
 import socket
 import ssl
-import test
+
 
 class URL:
     def __init__(self,url):
@@ -8,7 +8,7 @@ class URL:
         # http://example.org/index.html
     
         self.scheme, url=url.split("://", 1)
-        assert self.scheme in ["http","https"]
+        assert self.scheme in ["http","https","file"]
         if "/" not in url:
             url = url+"/"
         self.host, url = url.split("/", 1)
@@ -52,9 +52,9 @@ class URL:
         
         statusline = response.readline()
         version, status, explaination = statusline.split(" ", 2)
-        # print(f'version:{version}')
-        # print(f'status:{status}')
-        # print(f'explaination:{explaination}')
+        print(f'version:{version}')
+        print(f'status:{status}')
+        print(f'explaination:{explaination}')
         
         response_headers = {}
         while True:
@@ -62,8 +62,11 @@ class URL:
             if line == "\r\n":break
             header, value = line.split(":", 1)
             response_headers[header.casefold()] = value.strip()
-            response_headers['http-version'] = version
-            response_headers['user-agent'] = "harry's browser"
+            response_headers["http-version"] = version
+            response_headers["user-agent"] = "harry's browser"
+            response_headers["status"] = status
+            response_headers["explaination"] = explaination.replace("\r\n","")
+        
         assert "transfer-encoding" not in response_headers
         assert "content-encoding" not in response_headers
         print(f'response headers: {response_headers}')

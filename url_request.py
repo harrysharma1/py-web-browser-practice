@@ -52,6 +52,9 @@ class URL:
         
         statusline = response.readline()
         version, status, explaination = statusline.split(" ", 2)
+        # print(f'version:{version}')
+        # print(f'status:{status}')
+        # print(f'explaination:{explaination}')
         
         response_headers = {}
         while True:
@@ -59,6 +62,7 @@ class URL:
             if line == "\r\n":break
             header, value = line.split(":", 1)
             response_headers[header.casefold()] = value.strip()
+            response_headers['http-version'] = version
         assert "transfer-encoding" not in response_headers
         assert "content-encoding" not in response_headers
         

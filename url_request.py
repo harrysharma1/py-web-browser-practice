@@ -63,8 +63,10 @@ class URL:
             header, value = line.split(":", 1)
             response_headers[header.casefold()] = value.strip()
             response_headers['http-version'] = version
+            response_headers['user-agent'] = "harry's browser"
         assert "transfer-encoding" not in response_headers
         assert "content-encoding" not in response_headers
+        print(f'response headers: {response_headers}')
         
         body = response.read()
         s.close()

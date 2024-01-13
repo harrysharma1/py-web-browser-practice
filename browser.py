@@ -57,6 +57,8 @@ class BrowserViewer():
     def draw(self):
         self.canvas.delete("all")
         for x,y,t in self.display_list:
+            if y>self.scroll + HEIGHT:continue
+            if y + VSTEP < self.scroll:continue
             self.canvas.create_text(x,y-self.scroll,text=t)
         
 

@@ -60,6 +60,7 @@ class URL:
                 body = file.read()
             return body
         
+        
         s = socket.socket(
             family=socket.AF_INET,
             type=socket.SOCK_STREAM,
@@ -101,9 +102,11 @@ class URL:
         
         assert "transfer-encoding" not in response_headers
         assert "content-encoding" not in response_headers
-        # print(f'response headers: {response_headers}')
+        print(f'response headers: {response_headers}')
         
         body = response.read()
+        if self.scheme == "data":
+            body = self.path
         s.close()
         
         return body
@@ -165,15 +168,15 @@ Testing to see if the URL class's member variables show the correct thing
 # print(a.path)   
 # print(a.scheme)
 
-url = "data:text/html,Hello, World!"
-a = URL(url)
-print(a.scheme)
-print(a.port)
-print(a.host)
-print(a.path)
-# if __name__ == "__main__":
-#     import sys
-#     load(URL(sys.argv[1]))
+# url = "data:text/html,Hello, World!"
+# a = URL(url)
+# print(a.host)
+# print(a.path)    
+# print(a.scheme)
+
+if __name__ == "__main__":
+    import sys
+    load(URL(sys.argv[1]))
 
             
             

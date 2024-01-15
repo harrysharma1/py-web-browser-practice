@@ -12,7 +12,7 @@ class URL:
         # data:text/html,
         
         if url[:4] == "data":
-            self.scheme = "data"
+            self.scheme, url = url.split(":",1)
         else:
             self.scheme, url=url.split("://", 1)
         assert self.scheme in ["http","https","file","data"]
@@ -21,7 +21,7 @@ class URL:
         self.host, url = url.split("/", 1)
         self.path = "/"+ url
         
-        if self.scheme == "http":
+        if self.scheme == "http" or self.scheme == "data":
             self.port = 80
         elif self.scheme == "https":
             self.port = 443
@@ -29,7 +29,13 @@ class URL:
         if ":" in self.host:
             self.host, port = self.host.split(":",1)
             self.port = int(port)
+        
+        if "text" in self.host:
+            self.host = "text/html"
 
+        if "/html," in self.path:
+            temp = self.path.split(",",1)
+            self.path = temp[-1]
 
     
     """
@@ -159,10 +165,15 @@ Testing to see if the URL class's member variables show the correct thing
 # print(a.path)   
 # print(a.scheme)
 
-
-if __name__ == "__main__":
-    import sys
-    load(URL(sys.argv[1]))
+url = "data:text/html,Hello, World!"
+a = URL(url)
+print(a.scheme)
+print(a.port)
+print(a.host)
+print(a.path)
+# if __name__ == "__main__":
+#     import sys
+#     load(URL(sys.argv[1]))
 
             
             

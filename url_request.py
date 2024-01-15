@@ -29,12 +29,13 @@ class URL:
         if ":" in self.host:
             self.host, port = self.host.split(":",1)
             self.port = int(port)
-        
+        print(self.host)
         if "text" in self.host:
             self.host = "text/html"
-
+        print(self.path)
         if "/html," in self.path:
-            temp = self.path.split(",",1)
+            temp = self.path.split(",")
+            print(temp)
             self.path = temp[-1]
 
     
@@ -58,6 +59,13 @@ class URL:
                 print("File was not found")
                 file = open("/Users/harrysharma/Desktop/.documents/epic_fail.txt","r")
                 body = file.read()
+            return body
+        if self.scheme == "data":
+            print("reached")
+            body = self.path
+            print(self.host)
+            print(self.path)
+            print(self.scheme)
             return body
         
         
@@ -105,8 +113,7 @@ class URL:
         print(f'response headers: {response_headers}')
         
         body = response.read()
-        if self.scheme == "data":
-            body = self.path
+        
         s.close()
         
         return body

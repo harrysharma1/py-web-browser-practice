@@ -6,9 +6,16 @@ class URL:
     def __init__(self,url):
         # scheme  hostname    path
         # http://example.org/index.html
-    
-        self.scheme, url=url.split("://", 1)
-        assert self.scheme in ["http","https","file"]
+        # scheme host/path
+        # file://~/path/to/file
+        # scheme
+        # data:text/html,
+        
+        if url[:4] == "data":
+            self.scheme = "data"
+        else:
+            self.scheme, url=url.split("://", 1)
+        assert self.scheme in ["http","https","file","data"]
         if "/" not in url:
             url = url+"/"
         self.host, url = url.split("/", 1)
